@@ -62,7 +62,8 @@ export const handler = async (event) => {
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: completion
+                    text: completion.replace(/\*\*/g, "*"),
+                    parse_mode: "Markdown"
                 })
             });
             console.log('SendMessage Response:', await response.json());
