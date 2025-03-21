@@ -1,4 +1,4 @@
-// import { askAi } from './ai-chat.js';
+import { askAi } from './ai-chat.js';
 
 /**
  * AWS Lambda function that implements a similar REST service as server.js.
@@ -50,8 +50,7 @@ export const handler = async (event) => {
 
         // Call the AI chat function
         const prompt = body.message.text;
-        // const completion = await askAi(body.prompt);
-        const completion = `Hello, ${prompt}`;
+        const completion = await askAi(prompt);
 
         // Send the response to the Telegram bot
         const botToken = process.env.TELEGRAM_BOT_TOKEN;

@@ -34,17 +34,18 @@ export function removeUtmSource(text) {
  */
 export function askAi(userPrompt) {
     return openai.chat.completions.create({
-        model: "gpt-4o-mini-search-preview",
+        // model: "gpt-4o-mini-search-preview",
+        model: "gpt-4o-mini",
         messages: [
-            {
-                role: "developer",
-                content: "Du bist ein freundlicher Helfer, der Nutzer des besonderen elektronischen Anwaltspostfaches beA unterstützt."
-            },
+            // {
+            //     role: "developer",
+            //     content: "You are a helpful assistant that helps with the research of vulnerabilities."
+            // },
             {
                 role: "user",
                 content: userPrompt
             }
         ],
-        web_search_options: {}
+        // web_search_options: {}
     }).then(response => removeUtmSource(response.choices[0].message.content));
 }
