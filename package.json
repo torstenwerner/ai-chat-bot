@@ -7,7 +7,8 @@
   "scripts": {
     "build": "rm -rf dist && mkdir dist && cp lambda.js package.json dist/ && cd dist && npm install --production",
     "package": "npm run build && cd dist && zip -r ../function.zip .",
-    "update": "npm run package && node update-lambda.js"
+    "update": "npm run package && node update-lambda.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
     "openai": "^4.28.4"
   },
   "devDependencies": {
-    "@aws-sdk/client-lambda": "^3.758.0"
+    "@aws-sdk/client-lambda": "^3.758.0",
+    "jest": "^29.7.0"
   }
 }
