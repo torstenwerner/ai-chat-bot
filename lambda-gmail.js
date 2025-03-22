@@ -39,20 +39,19 @@ export const handler = async (event) => {
                 body: JSON.stringify({ error: 'Invalid JSON in request body' })
             };
         }
-        console.log("Event body:\n", JSON.stringify(body, null, 2));
+        // console.log("Event body:\n", JSON.stringify(body, null, 2));
         const messageInfo = await fetchMessage(body.historyId);
-        if (!!messageInfo) {
-            console.log("Email message info:\n", JSON.stringify(messageInfo, null, 2));
+        if (!!messageInfo && messageInfo.valid) {
+            // console.log("Email message info:\n", JSON.stringify(messageInfo, null, 2));
             const chatMessage = `**Neue E-Mail:**\n_Von:_ ${messageInfo.from}\n_Betreff:_ ${messageInfo.subject}\n_Text:_\n${messageInfo.body.substring(0, 1000)}`;
-            console.log("Chat message:\n", chatMessage);
+            // console.log("Chat message:\n", chatMessage);
 
             // Call the AI chat function
             // const completion = await askAi(prompt);
             const telegramChat = new TelegramChat();
             await telegramChat.sendResponse(chatMessage);
         } else {
-            // console.error("No message info found for historyId:", body.historyId);
-            throw new Error("No message info found for historyId:", body.historyId);
+            console.info("No added message for historyId:", body.historyId);
         }
 
         // Return the successful response
