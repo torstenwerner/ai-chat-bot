@@ -44,25 +44,7 @@ export const handler = async (event) => {
         const telegramChat = new TelegramChat(body);
         const prompt = telegramChat.getMessageText();
         const completion = await askAi(prompt);
-
-        // Send the response to the Telegram bot
-        const botToken = process.env.TELEGRAM_BOT_TOKEN;
-        try {
-            const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: telegramChat.getChatId(),
-                    text: telegramifyMarkdown(completion),
-                    parse_mode: "MarkdownV2"
-                })
-            });
-            console.log('SendMessage Response:', await response.json());
-        } catch (error) {
-            console.error('SendMessage Error:', error);
-        }
+        await telegramChat.sendResponse(completion);
 
         // Return the successful response
         return {

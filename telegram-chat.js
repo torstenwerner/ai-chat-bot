@@ -8,7 +8,7 @@ const botToken = process.env.TELEGRAM_BOT_TOKEN;
 
 export class TelegramChat {
     constructor(incomingChat) {
-        console.log('incomingChat:', incomingChat);
+        // console.log('incomingChat:', incomingChat);
         this.incomingChat = incomingChat;
     }
     
@@ -21,12 +21,31 @@ export class TelegramChat {
             console.error('voice is not supported', this.incomingChat.message.voice);
             return "Sag bitte, das Sprachanfragen nicht unterstützt werden.";
         }
-        console.log('messageText:', this.incomingChat.message.text);
+        // console.log('messageText:', this.incomingChat.message.text);
         return this.incomingChat.message.text;
     }
 
     getChatId() {
-        console.log('getChatId:', this.incomingChat.message.chat.id);
+        // console.log('getChatId:', this.incomingChat.message.chat.id);
         return this.incomingChat.message.chat.id;
+    }
+
+    async sendResponse(responseText) {
+        try {
+            const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: this.getChatId(),
+                    text: telegramifyMarkdown(responseText),
+                    parse_mode: "MarkdownV2"
+                })
+            });
+            // console.log('SendMessage Response:', await response.json());
+        } catch (error) {
+            console.error('SendMessage Error:', error);
+        }
     }
 }
