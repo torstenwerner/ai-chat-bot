@@ -2,6 +2,7 @@ dist/
 answer.html
 answer.md
 credentials.json
+service-account.json
 token.json
 token.pickle
 

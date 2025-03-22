@@ -23,7 +23,7 @@ oauth2Client.setCredentials(token);
 // Create Gmail API client
 const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
 
-async function fetchMessage(historyId) {
+export async function fetchMessage(historyId) {
     try {
         // First, get the history to find the message ID
         const history = await gmail.users.history.list({
@@ -86,4 +86,4 @@ async function fetchMessage(historyId) {
 }
 
 // Execute the function
-fetchMessage('12030927'); 
+// fetchMessage('12031770'); 
