@@ -1,5 +1,6 @@
 import { askAi } from './ai-chat.js';
 import { TelegramChat } from './telegram-chat.js';
+import { fetchMessage } from './gmail-fetch-message.js';
 
 /**
  * AWS Lambda function that implements a similar REST service as server.js.
@@ -39,10 +40,19 @@ export const handler = async (event) => {
             };
         }
         console.log("Event body:\n", JSON.stringify(body, null, 2));
+        const messageInfo = await fetchMessage(body.historyId);
+        if (!!messageInfo) {
+            console.log("Email message info:\n", JSON.stringify(messageInfo, null, 2));
+            const chatMessage = `**Neue E-Mail:**\n_Von:_ ${messageInfo.from}\n_Betreff:_ ${messageInfo.subject}\n_Text:_\n${messageInfo.body.substring(0, 1000)}`;
+            console.log("Chat message:\n", chatMessage);
 
-        // Call the AI chat function
-        // const completion = await askAi(prompt);
-        // await telegramChat.sendResponse(completion);
+            // Call the AI chat function
+            // const completion = await askAi(prompt);
+            const telegramChat = new TelegramChat();
+            await telegramChat.sendResponse(chatMessage);
+        } else {
+            console.log("No message info found for historyId:", body.historyId);
+        }
 
         // Return the successful response
         return {

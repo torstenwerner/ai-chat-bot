@@ -4,7 +4,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const allowedChatId = process.env.TELEGRAM_CHAT_ID;
+if (!allowedChatId) {
+    throw new Error('TELEGRAM_CHAT_ID is not set');
+}
 const botToken = process.env.TELEGRAM_BOT_TOKEN;
+if (!botToken) {
+    throw new Error('TELEGRAM_BOT_TOKEN is not set');
+}
 
 export class TelegramChat {
     constructor(incomingChat) {

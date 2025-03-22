@@ -29,16 +29,18 @@ export async function fetchMessage(historyId) {
         const history = await gmail.users.history.list({
             userId: 'me',
             startHistoryId: historyId,
-            historyTypes: ['messageAdded']
+            // historyTypes: ['messageAdded']
         });
+        // console.log("History:\n", JSON.stringify(history, null, 2));
 
         if (!history.data.history || history.data.history.length === 0) {
-            console.log('No messages found for this history ID');
+            console.log('No messages found for historyId:', historyId);
             return;
         }
 
         // Get the first message ID from the history
-        const messageId = history.data.history[0].messagesAdded[0].message.id;
+        const messageId = history.data.history[0].messages[0].id;
+        console.log("Message ID:\n", messageId);
 
         // Get the full message
         const message = await gmail.users.messages.get({
@@ -46,6 +48,7 @@ export async function fetchMessage(historyId) {
             id: messageId,
             format: 'full'
         });
+        // console.log("Message:\n", JSON.stringify(message, null, 2));
 
         // Parse the message headers
         const headers = message.data.payload.headers;
@@ -67,16 +70,12 @@ export async function fetchMessage(historyId) {
             body = Buffer.from(message.data.payload.body.data, 'base64').toString('utf-8');
         }
 
-        // Truncate body to 100 characters
-        body = body.substring(0, 100) + (body.length > 100 ? '...' : '');
-
-        // Log the results
-        console.log('Message Details:');
-        console.log('From:', from);
-        console.log('Subject:', subject);
-        console.log('Body:', body);
-        console.log('Message ID:', messageId);
-
+        return {
+            from,
+            subject,
+            body,
+            messageId
+        };
     } catch (error) {
         console.error('Error fetching message:', error.message);
         if (error.response) {
@@ -86,4 +85,4 @@ export async function fetchMessage(historyId) {
 }
 
 // Execute the function
-// fetchMessage('12031770'); 
+// console.log(JSON.stringify(await fetchMessage(12032725), null, 2));

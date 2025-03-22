@@ -22,7 +22,8 @@ async function pullMessages() {
     for (const message of response.receivedMessages || []) {
         const messageData = JSON.parse(message.message.data);
         const historyId = messageData.historyId;
-        fetchMessage(historyId);
+        const messageInfo = await fetchMessage(historyId);
+        console.log(JSON.stringify(messageInfo, null, 2));
         if (message.ackId) {
             ackIds.push(message.ackId);
         }
