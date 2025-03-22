@@ -1,5 +1,6 @@
 import { askAi } from './ai-chat.js';
 import telegramifyMarkdown from 'telegramify-markdown';
+import { TelegramChat } from './telegram-chat.js';
 
 /**
  * AWS Lambda function that implements a similar REST service as server.js.
@@ -39,18 +40,9 @@ export const handler = async (event) => {
             };
         }
 
-        const chatId = process.env.TELEGRAM_CHAT_ID;
-        // console.log('Chat ID:', chatId);
-        if (body.message.chat.id != chatId) {
-            console.error('Chat ID is not authorized:', body.message.chat.id);
-            return {
-                statusCode: 403,
-                body: JSON.stringify({ message: 'Not authorized' })
-            };
-        }
-
         // Call the AI chat function
-        const prompt = body.message.text;
+        const telegramChat = new TelegramChat(body);
+        const prompt = telegramChat.getMessageText();
         const completion = await askAi(prompt);
 
         // Send the response to the Telegram bot
@@ -62,7 +54,7 @@ export const handler = async (event) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    chat_id: chatId,
+                    chat_id: telegramChat.getChatId(),
                     text: telegramifyMarkdown(completion),
                     parse_mode: "MarkdownV2"
                 })
