@@ -1,6 +1,9 @@
 dist/
 answer.html
 answer.md
+credentials.json
+token.json
+token.pickle
 
 # Dependencies
 node_modules/

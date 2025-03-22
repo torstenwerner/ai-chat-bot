@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.gmail.watch.renewal</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/torstenwerner/ai-playground/ai-chat-bot/renew_gmail_watch.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>518400</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/torstenwerner/ai-playground/ai-chat-bot/gmail_watch_stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/torstenwerner/ai-playground/ai-chat-bot/gmail_watch_stderr.log</string>
+</dict>
+</plist> 
