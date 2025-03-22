@@ -38,7 +38,7 @@ export class TelegramChat {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    chat_id: this.getChatId(),
+                    chat_id: allowedChatId,
                     text: telegramifyMarkdown(responseText),
                     parse_mode: "MarkdownV2"
                 })
