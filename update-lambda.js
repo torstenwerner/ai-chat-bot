@@ -4,9 +4,9 @@ import {join} from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config({path: '.env'});
-const FUNCTION_NAME = process.env.AWS_LAMBDA_FUNCTION_NAME;
+const FUNCTION_NAME = process.env.AWS_LAMBDA_FUNCTION_NAME_CHAT;
 if (!FUNCTION_NAME) {
-    console.error('Error: AWS_LAMBDA_FUNCTION_NAME environment variable is not set');
+    console.error('Error: AWS_LAMBDA_FUNCTION_NAME_CHAT environment variable is not set');
     process.exit(1);
 }
 
