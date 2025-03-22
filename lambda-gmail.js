@@ -38,12 +38,11 @@ export const handler = async (event) => {
                 body: JSON.stringify({ error: 'Invalid JSON in request body' })
             };
         }
+        console.log("Event body:\n", JSON.stringify(body, null, 2));
 
         // Call the AI chat function
-        const telegramChat = new TelegramChat(body);
-        const prompt = telegramChat.getMessageText();
-        const completion = await askAi(prompt);
-        await telegramChat.sendResponse(completion);
+        // const completion = await askAi(prompt);
+        // await telegramChat.sendResponse(completion);
 
         // Return the successful response
         return {
