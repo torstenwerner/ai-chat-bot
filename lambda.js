@@ -1,4 +1,5 @@
 import { askAi } from './ai-chat.js';
+import telegramifyMarkdown from 'telegramify-markdown';
 
 /**
  * AWS Lambda function that implements a similar REST service as server.js.
@@ -62,8 +63,8 @@ export const handler = async (event) => {
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: completion.replace(/\*\*/g, "*"),
-                    parse_mode: "Markdown"
+                    text: telegramifyMarkdown(completion),
+                    parse_mode: "MarkdownV2"
                 })
             });
             console.log('SendMessage Response:', await response.json());
