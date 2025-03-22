@@ -26,20 +26,23 @@ const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
 export async function fetchMessage(historyId) {
     try {
         // First, get the history to find the message ID
-        const history = await gmail.users.history.list({
+        const historyResponse = await gmail.users.history.list({
             userId: 'me',
             startHistoryId: historyId,
-            // historyTypes: ['messageAdded']
+            // historyTypes: ['messageAdded', 'labelAdded']
         });
         // console.log("History:\n", JSON.stringify(history, null, 2));
 
-        if (!history.data.history || history.data.history.length === 0) {
+        console.log("response data:\n", JSON.stringify(historyResponse.data, null, 2));
+        const history = historyResponse.data.history;
+        // console.log("History:\n", JSON.stringify(history, null, 2));
+        if (!history || history.length === 0) {
             console.log('No messages found for historyId:', historyId);
             return;
         }
 
         // Get the first message ID from the history
-        const messageId = history.data.history[0].messages[0].id;
+        const messageId = historyResponse.data.history[0].messages[0].id;
         console.log("Message ID:\n", messageId);
 
         // Get the full message
@@ -85,4 +88,4 @@ export async function fetchMessage(historyId) {
 }
 
 // Execute the function
-// console.log(JSON.stringify(await fetchMessage(12032725), null, 2));
+// console.log(JSON.stringify(await fetchMessage(12034002), null, 2));

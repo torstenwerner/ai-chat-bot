@@ -51,7 +51,8 @@ export const handler = async (event) => {
             const telegramChat = new TelegramChat();
             await telegramChat.sendResponse(chatMessage);
         } else {
-            console.log("No message info found for historyId:", body.historyId);
+            // console.error("No message info found for historyId:", body.historyId);
+            throw new Error("No message info found for historyId:", body.historyId);
         }
 
         // Return the successful response

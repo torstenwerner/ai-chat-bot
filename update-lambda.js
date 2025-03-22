@@ -33,13 +33,9 @@ async function updateLambdaFunction(functionName) {
         // Update the function
         console.log(`Updating Lambda function: ${functionName}`);
         const response = await client.send(command);
-        console.log('Update successful!');
-        console.log('Function ARN:', response.FunctionArn);
-        console.log('Last Modified:', response.LastModified);
-        console.log('Code SHA256:', response.CodeSha256);
+        console.log(`Successfully updated function: ${functionName}`);
     } catch (error) {
-        console.error('Error updating Lambda function:', error);
-        process.exit(1);
+        console.error(`Error updating Lambda function: ${functionName}`, error);
     }
 }
 

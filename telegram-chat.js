@@ -49,7 +49,7 @@ export class TelegramChat {
                     parse_mode: "MarkdownV2"
                 })
             });
-            // console.log('SendMessage Response:', await response.json());
+            console.log('SendMessage Response:', await response.json());
         } catch (error) {
             console.error('SendMessage Error:', error);
         }
